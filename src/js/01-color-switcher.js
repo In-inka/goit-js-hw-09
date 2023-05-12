@@ -6,34 +6,21 @@ stopBtn.disabled = true;
 
 let setIntervalId;
 
-startBtn.addEventListener('click', () => {
-  onClickStart();
-  btnDisabledStart();
-});
+startBtn.addEventListener('click', onClickStart);
 
-stopBtn.addEventListener('click', () => {
-  onClickStop();
-  btnDisabledStop();
-});
-
-function btnDisabledStart() {
-  startBtn.disabled = true;
-  stopBtn.disabled = false;
-}
-
-function btnDisabledStop() {
-  startBtn.disabled = false;
-  stopBtn.disabled = true;
-}
+stopBtn.addEventListener('click', onClickStop);
 
 function onClickStart() {
   setIntervalId = setInterval(bodyColorStyle, 1000);
   startBtn.disabled = true;
+  stopBtn.disabled = false;
 }
 
 function onClickStop() {
   clearInterval(setIntervalId);
   setIntervalId = null;
+  startBtn.disabled = false;
+  stopBtn.disabled = true;
 }
 
 function getRandomHexColor() {
