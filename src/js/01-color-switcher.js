@@ -18,7 +18,7 @@ function onClickStart() {
 
 function onClickStop() {
   clearInterval(setIntervalId);
-  setIntervalId = null;
+
   startBtn.disabled = false;
   stopBtn.disabled = true;
 }
