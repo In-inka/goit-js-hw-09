@@ -20,22 +20,22 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (selectedDates[0].getTime() < Date.now()) {
+    if (datePicker.selectedDates[0].getTime() < Date.now()) {
       Notiflix.Notify.failure('Please choose a date in the future');
+      return;
     }
     startBtn.disabled = false;
-    localStorage.setItem('selectionTime', selectedDates[0].getTime());
   },
 };
+
+const datePicker = flatpickr(dateSelection, options);
 
 startBtn.addEventListener('click', onClickTimer);
 
 function onClickTimer() {
-  const saveValueDate = JSON.parse(localStorage.getItem('selectionTime'));
-
   setInterval(() => {
     const currentTime = Date.now();
-    const timeDifference = saveValueDate - currentTime;
+    const timeDifference = datePicker.selectedDates[0].getTime() - currentTime;
 
     if (timeDifference <= 0) {
       clearInterval(intervalId);
@@ -48,6 +48,7 @@ function onClickTimer() {
     dateMinutes.textContent = addLeadingZero(`${minutes}`);
     dateSecond.textContent = addLeadingZero(`${seconds}`);
   }, 1000);
+  startBtn.disabled = true;
 }
 
 function convertMs(ms) {
@@ -72,5 +73,3 @@ function convertMs(ms) {
 function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
-
-flatpickr(dateSelection, options);
